@@ -30,6 +30,26 @@ property_area = st.selectbox("Property Area",
 education = st.selectbox("Education Level",
                          ["Graduate", "Postgraduate", "Undergraduate"])
 
+marital_status = st.selectbox(
+    "Marital Status",
+    ["Single", "Married", "Divorced"]
+)
+
+loan_purpose = st.selectbox(
+    "Loan Purpose",
+    ["Home", "Car", "Education", "Business"]
+)
+
+gender = st.selectbox(
+    "Gender",
+    ["Male", "Female"]
+)
+
+employer_category = st.selectbox(
+    "Employer Category",
+    ["Private", "Government", "Self-Employed"]
+)
+
 # ========== PREDICTION ==========
 if st.button("Predict Loan Status"):
 
