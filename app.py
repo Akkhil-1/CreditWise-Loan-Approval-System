@@ -35,29 +35,43 @@ if st.button("Predict Loan Status"):
 
     # Create dataframe
     input_df = pd.DataFrame({
-        "Applicant_Income": [app_income],
-        "Coapplicant_Income": [co_income],
-        "Age": [age],
-        "Credit_Score": [credit_score],
-        "Loan_Amount": [loan_amount],
-        "DTI_Ratio": [dti],
-        "Savings": [savings],
-        "Collateral_Value": [collateral],
-        "Employment_Status": [employment],
-        "Property_Area": [property_area],
-        "Education_Level": [education]
+    "Applicant_Income": [app_income],
+    "Coapplicant_Income": [co_income],
+    "Age": [age],
+    "Credit_Score": [credit_score],
+    "Loan_Amount": [loan_amount],
+    "DTI_Ratio": [dti],
+    "Savings": [savings],
+    "Collateral_Value": [collateral],
+    "Education_Level": [education],
+    "Employment_Status": [employment],
+    "Marital_Status": [marital_status],
+    "Loan_Purpose": [loan_purpose],
+    "Property_Area": [property_area],
+    "Gender": [gender],
+    "Employer_Category": [employer_category]
     })
 
-    # Separate categorical columns
-    cat_cols = ["Employment_Status", "Property_Area", "Education_Level"]
+    cat_cols = [
+    "Employment_Status",
+    "Marital_Status",
+    "Loan_Purpose",
+    "Property_Area",
+    "Gender",
+    "Employer_Category"
+]
 
     encoded = ohe.transform(input_df[cat_cols])
-    encoded_df = pd.DataFrame(encoded, columns=ohe.get_feature_names_out())
+    encoded_df = pd.DataFrame(
+        encoded,
+        columns=ohe.get_feature_names_out(cat_cols)
+    )
+
+    # Drop original categorical columns
+    input_df = input_df.drop(columns=cat_cols)
 
     # Combine numeric + encoded
-    numeric_df = input_df.drop(columns=cat_cols)
-    final_df = pd.concat([numeric_df.reset_index(drop=True),
-                          encoded_df.reset_index(drop=True)], axis=1)
+    final_df = pd.concat([input_df, encoded_df], axis=1)    
 
     # Scale
     scaled = scaler.transform(final_df)
