@@ -13,3 +13,7 @@ ENV/
 
 # VS Code settings
 .vscode/
+
+data/
+*.csv
+*.xlsx
